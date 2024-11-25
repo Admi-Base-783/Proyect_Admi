@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "CrearTabla";
+}
+
+<h2>CrearTabla</h2>
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Formulario para crear la tabla -->
+<form method="post">
+    <div class="form-group">
+        <label for="tableName">Nombre de la tabla</label>
+        <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Introduce el nombre de la tabla" required />
+    </div>
+
+    <h4>Columnas</h4>
+    <div id="columnsContainer">
+        <!-- Primera columna por defecto -->
+        <div class="column-definition">
+            <div class="form-group">
+                <label for="columnName">Nombre de la columna</label>
+                <input type="text" class="form-control" name="columnNames[]" placeholder="Nombre de la columna" required />
+            </div>
+            <div class="form-group">
+                <label for="columnType">Tipo de columna</label>
+                <select class="form-control" name="columnTypes[]" required>
+                    <option value="INT">INT</option>
+                    <option value="VARCHAR">VARCHAR</option>
+                    <option value="DATETIME">DATETIME</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="columnSize">Tamaño (si aplica)</label>
+                <input type="number" class="form-control" name="columnSizes[]" min="1" placeholder="Ejemplo: 255" />
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="allowNulls[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="allowNulls[]" value="true" />
+                <label class="form-check-label" for="allowNull">Permitir NULL</label>
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="isPrimaryKeys[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="isPrimaryKeys[]" value="true" />
+                <label class="form-check-label" for="isPrimaryKey">Llave Primaria</label>
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="isUniques[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="isUniques[]" value="true" />
+                <label class="form-check-label" for="isUnique">Único</label>
+            </div>
+            <div class="form-group">
+                <label for="defaultValue">Valor Predeterminado</label>
+                <input type="text" class="form-control" name="defaultValues[]" placeholder="Opcional: valor predeterminado" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <button type="button" id="addColumn" class="btn btn-secondary mt-3">Agregar Columna</button>
+    <br />
+    <button type="submit" class="btn btn-primary mt-3">Crear Tabla</button>
+</form>
+
+<!-- Script para agregar dinámicamente columnas -->
+<script>document.getElementById("addColumn").addEventListener("click", function () {
+        let columnDiv = document.createElement("div");
+        columnDiv.classList.add("column-definition", "mt-3");
+
+        columnDiv.innerHTML = `
+            <div class="form-group">
+                <label for="columnName">Nombre de la columna</label>
+                <input type="text" class="form-control" name="columnNames[]" placeholder="Nombre de la columna" required />
+            </div>
+            <div class="form-group">
+                <label for="columnType">Tipo de columna</label>
+                <select class="form-control" name="columnTypes[]" required>
+                    <option value="INT">INT</option>
+                    <option value="VARCHAR">VARCHAR</option>
+                    <option value="DATETIME">DATETIME</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="columnSize">Tamaño (si aplica)</label>
+                <input type="number" class="form-control" name="columnSizes[]" min="1" placeholder="Ejemplo: 255" />
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="allowNulls[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="allowNulls[]" value="true" />
+                <label class="form-check-label" for="allowNull">Permitir NULL</label>
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="isPrimaryKeys[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="isPrimaryKeys[]" value="true" />
+                <label class="form-check-label" for="isPrimaryKey">Llave Primaria</label>
+            </div>
+            <div class="form-check">
+                <input type="hidden" name="isUniques[]" value="false" />
+                <input type="checkbox" class="form-check-input" name="isUniques[]" value="true" />
+                <label class="form-check-label" for="isUnique">Único</label>
+            </div>
+            <div class="form-group">
+                <label for="defaultValue">Valor Predeterminado</label>
+                <input type="text" class="form-control" name="defaultValues[]" placeholder="Opcional: valor predeterminado" />
+            </div>
+        `;
+        document.getElementById("columnsContainer").appendChild(columnDiv);
+    });</script>
